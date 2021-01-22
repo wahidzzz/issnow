@@ -3,10 +3,12 @@ function callIssNow() {
     .get("http://api.open-notify.org/iss-now.json")
     .then(function (res) {
       // handle success
+      var markIcon = document.getElementsByClassName("we-pm-icon");
+      while (markIcon.length > 0) markIcon[0].remove();
       //   console.log(res["data"]["iss_position"]);
       var lat = res["data"]["iss_position"]["latitude"];
       var lng = res["data"]["iss_position"]["longitude"];
-      console.log(lat, lng);
+      // console.log(parseFloat(lat), parseFloat(lng));
       var earth = new WE.map("earth_div");
 
       WE.tileLayer("http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png").addTo(
@@ -14,28 +16,29 @@ function callIssNow() {
       );
 
       //   var marker = WE.marker([parseFloat(lat), parseFloat(lng)]).addTo(earth);
-      var yesOne = 51.5;
-      var yesTwo = -0.09;
-      var marker = WE.marker([yesOne, yesTwo]).addTo(earth);
-
-      marker
-        .bindPopup("<b>Hello world!</b><br>I am a popup.<br />", {
-          maxWidth: 150,
-          closeButton: true,
-        })
-        .openPopup();
-
-      var markerCustom = WE.marker(
-        [50, -9],
-        "/img/logo-webglearth-white-100.png",
-        100,
-        24
+      var issLat = parseFloat(lat);
+      var issLng = parseFloat(lng);
+      var marker = WE.marker(
+        [issLat, issLng],
+        "../assets/iss.png",
+        120,
+        120
       ).addTo(earth);
 
-      earth.setView([51.505, 0], 3);
+      marker.bindPopup("<b>Hey</b><br>I am international space station<br />", {
+        maxWidth: 150,
+        closeButton: true,
+      });
+      // .openPopup();
+
+      earth.setView([issLat, issLng], 3);
     })
     .catch(function (error) {
       // handle error
       console.log(error);
     });
 }
+setInterval(function () {
+  callIssNow();
+  // console.log("Hello");
+}, 3000);
