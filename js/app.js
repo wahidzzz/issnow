@@ -1,4 +1,15 @@
-function callIssNow() {
+var earth;
+function init() {
+  earth = new WE.map("earth_div");
+
+  WE.tileLayer("http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png").addTo(
+    earth
+  );
+  earth.setView([21.7679, 78.8718], 3);
+  callIssNow(earth);
+}
+
+function callIssNow(earth) {
   axios
     .get("http://api.open-notify.org/iss-now.json")
     .then(function (res) {
@@ -9,20 +20,15 @@ function callIssNow() {
       var lat = res["data"]["iss_position"]["latitude"];
       var lng = res["data"]["iss_position"]["longitude"];
       // console.log(parseFloat(lat), parseFloat(lng));
-      var earth = new WE.map("earth_div");
-
-      WE.tileLayer("http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png").addTo(
-        earth
-      );
 
       //   var marker = WE.marker([parseFloat(lat), parseFloat(lng)]).addTo(earth);
       var issLat = parseFloat(lat);
       var issLng = parseFloat(lng);
       var marker = WE.marker(
         [issLat, issLng],
-        "../assets/iss.png",
-        120,
-        120
+        "../assets/issicon.png",
+        50,
+        30
       ).addTo(earth);
 
       marker.bindPopup("<b>Hey</b><br>I am international space station<br />", {
@@ -31,7 +37,7 @@ function callIssNow() {
       });
       // .openPopup();
 
-      earth.setView([issLat, issLng], 3);
+      earth.setView([issLat, issLng], Math.round(earth.getZoom()));
     })
     .catch(function (error) {
       // handle error
@@ -39,6 +45,5 @@ function callIssNow() {
     });
 }
 setInterval(function () {
-  callIssNow();
-  // console.log("Hello");
+  callIssNow(earth);
 }, 3000);
