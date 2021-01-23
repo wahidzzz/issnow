@@ -5,7 +5,7 @@ function init() {
   WE.tileLayer("http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png").addTo(
     earth
   );
-  earth.setView([21.7679, 78.8718], 3);
+  earth.setView([21.7679, 78.8718], 2);
   callIssNow(earth);
 }
 
@@ -31,6 +31,18 @@ function callIssNow(earth) {
         30
       ).addTo(earth);
 
+      // Start a simple rotation animation
+      // var before = null;
+      // requestAnimationFrame(function animate(now) {
+      //   var c = earth.getPosition();
+      //   var elapsed = before ? now - before : 0;
+      //   before = now;
+      //   earth.setCenter([c[0], c[1] + 0.1 * (elapsed / 100)]);
+      //   requestAnimationFrame(animate);
+      //   console.log(now);
+      //   console.log(before);
+      // });
+
       marker.bindPopup("<b>Hey</b><br>I am international space station<br />", {
         maxWidth: 150,
         closeButton: true,
@@ -44,6 +56,6 @@ function callIssNow(earth) {
       console.log(error);
     });
 }
-setInterval(function () {
-  callIssNow(earth);
-}, 3000);
+// setInterval(function () {
+//   callIssNow(earth);
+// }, 3000);
