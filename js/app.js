@@ -5,7 +5,7 @@ function init() {
   WE.tileLayer("http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png").addTo(
     earth
   );
-  earth.setView([21.7679, 78.8718], 2);
+  earth.setView([21.7679, 78.8718], 4);
   callIssNow(earth);
 }
 
