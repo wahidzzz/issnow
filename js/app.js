@@ -1,5 +1,11 @@
 var earth;
+
+// Current People in Space http://api.open-notify.org/astros.json
+// Passing position http://api.open-notify.org/iss-pass.json?lat=LAT&lon=LON
+// Predcition example http://api.open-notify.org/iss-pass.json?lat=45.0&lon=-122.3&alt=20&n=5
+
 function init() {
+  document.getElementById("darkSwitch").checked = false;
   earth = new WE.map("earth_div");
 
   WE.tileLayer("http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png").addTo(
@@ -24,12 +30,7 @@ function callIssNow(earth) {
       //   var marker = WE.marker([parseFloat(lat), parseFloat(lng)]).addTo(earth);
       var issLat = parseFloat(lat);
       var issLng = parseFloat(lng);
-      var marker = WE.marker(
-        [issLat, issLng],
-        "../assets/issicon.png",
-        50,
-        30
-      ).addTo(earth);
+      var marker = WE.marker([issLat, issLng]).addTo(earth);
 
       // Start a simple rotation animation
       // var before = null;
@@ -55,6 +56,16 @@ function callIssNow(earth) {
       // handle error
       console.log(error);
     });
+}
+function goDark() {
+  var holderCol = document.getElementById("holder-col");
+  var dataCard = document.getElementById("data-col");
+  if (document.getElementById("darkSwitch").checked) {
+    // console.log("Done");
+    dataCard.style.backgroundColor = "#121212";
+  } else {
+    dataCard.style.backgroundColor = "white";
+  }
 }
 // setInterval(function () {
 //   callIssNow(earth);
