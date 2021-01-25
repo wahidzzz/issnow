@@ -5,13 +5,13 @@ var earth;
 // Predcition example http://api.open-notify.org/iss-pass.json?lat=45.0&lon=-122.3&alt=20&n=5
 
 function init() {
-  document.getElementById("darkSwitch").checked = false;
+  // document.getElementById("darkSwitch").checked = false;
   earth = new WE.map("earth_div");
 
   WE.tileLayer("http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png").addTo(
     earth
   );
-  earth.setView([21.7679, 78.8718], 4);
+  earth.setView([21.7679, 78.8718], 3);
   callIssNow(earth);
 }
 
@@ -20,6 +20,7 @@ function callIssNow(earth) {
     .get("http://api.open-notify.org/iss-now.json")
     .then(function (res) {
       // handle success
+      console.log(res);
       var markIcon = document.getElementsByClassName("we-pm-icon");
       while (markIcon.length > 0) markIcon[0].remove();
       //   console.log(res["data"]["iss_position"]);
