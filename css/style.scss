@@ -1,11 +1,11 @@
-@import url('https://fonts.googleapis.com/css2?family=Trispace&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Trispace&display=swap");
 
 html,
 body {
   padding: 0;
   margin: 0;
   background-color: #121212;
-  font-family: 'Trispace', sans-serif;
+  font-family: "Trispace", sans-serif;
 }
 
 #earth_div {
@@ -16,23 +16,23 @@ body {
   position: absolute !important;
   width: 100%;
 }
-nav{
+nav {
   position: absolute;
-  top:1.5rem;
-  right: .5rem;
-  left:.5rem;
-  z-index:9999999;
+  top: 1.5rem;
+  right: 0.5rem;
+  left: 0.5rem;
+  z-index: 9999999;
   background-color: #242424;
-  box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
 }
 ul {
   list-style-type: none;
   margin: 0;
-  padding: .5rem;
+  padding: 0.5rem;
   text-transform: uppercase;
-  height:2rem;
+  height: 2rem;
 
-  display:flex;
+  display: flex;
   align-items: center;
   flex-wrap: wrap;
   justify-content: space-around;
@@ -40,23 +40,38 @@ ul {
 
 a {
   text-decoration: none;
-  padding: .2rem;
-  color:rgb(226, 226, 226);
+  padding: 0.2rem;
+  color: rgb(226, 226, 226);
 }
-.dataDiv{
-  color:rgb(226, 226, 226);
- height: 25%;
- position: absolute;
- bottom:1.5rem;
- right: .5rem;
- left:.5rem;
- z-index:9999999;
- background-color: #242424;
- box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+.dataDiv {
+  color: rgb(226, 226, 226);
+  height: 25%;
+  position: absolute;
+  bottom: 1.5rem;
+  right: 0.5rem;
+  left: 0.5rem;
+  z-index: 9999999;
+  background-color: #242424;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
 }
-  
-.rounded{
-  border-radius:.5rem;
+.pipDiv {
+  z-index: 9999999;
+  height: 25%;
+  color: rgb(226, 226, 226);
+  background-color: #242424;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
+}
+#speaker {
+  background-color: #242424;
+  border-radius: 0.3rem;
+  border: none;
+  padding: 0.4rem;
+  cursor: pointer;
+  transition: background-color 500ms linear;
+}
+
+.rounded {
+  border-radius: 0.5rem;
 }
 .we-pm-icon {
   background-image: url(../assets/issicon.png) !important;
