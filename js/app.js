@@ -10,10 +10,11 @@ function init() {
   // document.getElementById("darkSwitch").checked = false;
   earth = new WE.map("earth_div");
   // http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png
+  // dark theme :"https://api.maptiler.com/maps/toner/{z}/{x}/{y}.png?key=P96ofHivGNVZ2xp6Umna"
 
-  WE.tileLayer("http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png").addTo(
-    earth
-  );
+  WE.tileLayer(
+    "https://api.maptiler.com/maps/hybrid/{z}/{x}/{y}.jpg?key=P96ofHivGNVZ2xp6Umna"
+  ).addTo(earth);
   earth.setView([21.7679, 78.8718], 3);
   callIssNow(earth);
 }
