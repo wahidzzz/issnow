@@ -1,11 +1,20 @@
 @import url("https://fonts.googleapis.com/css2?family=Trispace&display=swap");
 
+//dark theme color
+$darkGrey: #121212;
+$lightGrey: #242424;
+$textColor: rgb(226, 226, 226);
+$accentColor: #82b1ff;
+
 html,
 body {
   padding: 0;
   margin: 0;
-  background-color: #121212;
+  background-color: $darkGrey;
   font-family: "Trispace", sans-serif;
+  -webkit-font-smoothing: antialiased !important;
+  -moz-osx-font-smoothing: grayscale !important;
+  -ms-font-smoothing: antialiased !important;
 }
 
 #earth_div {
@@ -22,7 +31,7 @@ nav {
   right: 0.5rem;
   left: 0.5rem;
   z-index: 9999999;
-  background-color: #242424;
+  background-color: $lightGrey;
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
 }
 ul {
@@ -41,28 +50,29 @@ ul {
 a {
   text-decoration: none;
   padding: 0.2rem;
-  color: rgb(226, 226, 226);
+  color: $textColor;
 }
 .dataDiv {
-  color: rgb(226, 226, 226);
+  color: $textColor;
   height: 25%;
   position: absolute;
   bottom: 1.5rem;
   right: 0.5rem;
   left: 0.5rem;
   z-index: 9999999;
-  background-color: #242424;
+  background-color: $lightGrey;
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
 }
 .pipDiv {
   z-index: 9999999;
+  padding: 1rem;
   height: 25%;
-  color: rgb(226, 226, 226);
-  background-color: #242424;
+  color: $textColor;
+  background-color: $lightGrey;
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
 }
 #speaker {
-  background-color: #242424;
+  background-color: $lightGrey;
   border-radius: 0.3rem;
   border: none;
   padding: 0.4rem;
@@ -73,9 +83,159 @@ a {
 .rounded {
   border-radius: 0.5rem;
 }
+.tab {
+  overflow: hidden;
+  color: $textColor;
+  padding-top: 0.2rem;
+}
+
+/* Style the buttons that are used to open the tab content */
+.tab button {
+  background-color: inherit;
+  color: $textColor;
+  font-family: "Trispace", sans-serif;
+  float: left;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  padding: 14px 16px;
+  transition: 0.3s;
+}
+.tab button.active {
+  color: $accentColor;
+  border-bottom: 1px solid $accentColor;
+  transition: border 0.5s;
+}
+/* Style the tab content */
+.tabcontent {
+  display: none;
+  padding: 6px 12px;
+  font-size: 0.8rem;
+  animation: fadeEffect 1s; /* Fading effect takes 1 second */
+}
+
+/* Go from zero to full opacity */
+@keyframes fadeEffect {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
 .we-pm-icon {
   background-image: url(../assets/issicon.png) !important;
   :hover {
     cursor: pointer;
   }
+}
+
+.md-switch {
+  margin-bottom: 15px;
+  margin-right: 0.5rem;
+}
+.md-switch:last-of-type {
+  margin-bottom: 0px;
+}
+.md-switch .md-toggle {
+  position: absolute;
+  visibility: hidden;
+}
+.md-switch .md-toggle + label {
+  display: block;
+  position: relative;
+  cursor: pointer;
+  outline: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+.md-switch input.md-toggle-round + label {
+  padding: 2px;
+  width: 48px;
+  height: 20px;
+}
+.md-switch input.md-toggle-round + label:before,
+input.md-toggle-round + label:after {
+  display: block;
+  position: absolute;
+  top: 1px;
+  left: 1px;
+  bottom: 1px;
+  content: "";
+}
+.md-switch input.md-toggle-round + label:before {
+  right: 1px;
+  background: $textColor;
+  box-shadow: inset 0px 1px 2px 0px rgba(0, 0, 0, 0.24);
+  border-radius: 60px;
+  -webkit-transition: background 0.2s;
+  -moz-transition: background 0.2s;
+  transition: background 0.2s;
+}
+.md-switch input.md-toggle-round + label:after {
+  width: 34px;
+  height: 34px;
+  margin: auto 4px;
+  background: $accentColor;
+  box-shadow: 0px 1px 2px 0px rgba(0, 0, 0, 0.24);
+  border-radius: 100%;
+  -webkit-transition: margin 0.2s;
+  -moz-transition: margin 0.2s;
+  -o-transition: margin 0.2s;
+  transition: margin 0.2s;
+}
+.md-switch input.md-toggle-round:checked + label:before {
+  background-color: $darkGrey;
+  box-shadow: inset 0px 1px 2px 0px rgba(0, 0, 0, 0.24);
+}
+.md-switch input.md-toggle-round:checked + label:after {
+  margin-left: 32px;
+}
+.md-switch input.md-toggle-round:checked + label span {
+  color: $accentColor;
+}
+// .md-switch label span {
+//   position: absolute;
+//   top: 10px;
+//   display: block;
+//   font-size: 18px;
+//   padding-left: 15px;
+//   box-sizing: border-box;
+//   min-width: 500px;
+//   height: 40px;
+//   margin-left: 65px;
+//   // vertical-align: middle;
+//   color: #555555;
+// }
+
+.md-switch input:disabled + label:before {
+  background-color: $textColor;
+  cursor: not-allowed;
+}
+.md-switch input:disabled + label span {
+  color: $textColor;
+  cursor: not-allowed;
+}
+.md-switch input:disabled + label:after {
+  background-color: $textColor;
+  cursor: not-allowed;
+}
+
+.md-switch.sm input.md-toggle-round + label {
+  width: 35px;
+  height: 18px;
+}
+.md-switch.sm input.md-toggle-round + label:after {
+  width: 14px;
+  height: 14px;
+}
+.md-switch.sm input.md-toggle-round:checked + label:after {
+  margin-left: 20px;
+}
+.md-switch.sm label span {
+  margin-left: 35px;
+  line-height: 0px;
 }

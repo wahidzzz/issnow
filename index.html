@@ -27,13 +27,52 @@
     </ul>
   </nav>
   <div class="rounded pipDiv">
-
+    Somepeople
   </div>
 
   <div id="earth_div"></div>
 
   <div class="rounded dataDiv">
+    <div class="tab">
+      <button class="tablinks active" onclick="openCity(event, 'details')">Current Position</button>
+      <button class="tablinks" onclick="openCity(event, 'pass-time')">Pass Time</button>
+      <button class="tablinks" style="float:right">
+        <div class="md-switch sm">
+          <input type="checkbox" id="follow-iss" name="follow-iss" title="Set to Track ISS"
+            class="md-toggle md-toggle-round">
+          <label for="follow-iss" title="Set to Track ISS"></label>
+        </div>
+      </button>
+    </div>
 
+    <!-- Tab content -->
+    <div id="details" class="tabcontent" style="display: block;">
+      <table style="width:100%;padding:.5rem;border-collapse: separate;
+      border-spacing: 0 .6rem;">
+        <tr>
+          <td>Lat, Lng</td>
+          <td>122.33,0.122</td>
+        </tr>
+
+        <tr>
+          <td>Speed</td>
+          <td>23000 km/h</td>
+        </tr>
+        <tr>
+          <td>Location</td>
+          <td>Mumbai</td>
+        </tr>
+        <tr>
+          <td>Last Updated</td>
+          <td>Timestamp</td>
+        </tr>
+      </table>
+    </div>
+
+    <div id="pass-time" class="tabcontent">
+      <h3>Paris</h3>
+      <p>Paris is the capital of France.</p>
+    </div>
   </div>
 
 
