@@ -23,13 +23,12 @@
   <nav class="rounded navMenu">
     <ul>
       <li><a href="./">Home</a></li>
-      <li><a href='#' onclick="openModalPop()">Astronouts Details</a></li>
+      <li><a href='#' onclick="openModalPop('pipDiv')">Astronouts Details</a></li>
       <li><button id="speaker" onclick="speakerClick()">🔊</button></li>
     </ul>
   </nav>
-  <div class="rounded pipDiv" id="pipDiv">
+  <div class="rounded pipDiv" id="pipDiv"></div>
 
-  </div>
 
   <div id="earth_div"></div>
 
@@ -37,13 +36,13 @@
     <div class="tab">
       <button class="tablinks active" onclick="openTab(event, 'details')">Current Position</button>
       <button class="tablinks" onclick="openTab(event, 'pass-time')">Pass Time</button>
-      <button class="tablinks" style="float:right">
+      <!-- <button class="tablinks" style="float:right">
         <div class="md-switch sm">
           <input type="checkbox" id="follow-iss" name="follow-iss" title="Set to Track ISS"
             class="md-toggle md-toggle-round">
           <label for="follow-iss" title="Set to Track ISS"></label>
         </div>
-      </button>
+      </button> -->
     </div>
 
     <!-- Tab content -->
@@ -71,7 +70,7 @@
     </div>
 
     <div id="pass-time" class="tabcontent">
-      <table style="width:100%;padding:.5rem;border-collapse: separate;
+      <!-- <table style="width:100%;padding:.5rem;border-collapse: separate;
       border-spacing: 0 .6rem;">
         <tr>
           <td>Fri Jan 29 2021 03:46:23 GMT+0530 (India Standard Time)</td>
@@ -89,10 +88,29 @@
         <tr>
           <td>Fri Jan 29 2021 03:46:23 GMT+0530 (India Standard Time)</td>
         </tr>
-
-
-      </table>
+      </table> -->
     </div>
+
+  </div>
+  <div id="warnMsg" class="rounded" style="top:6rem;font-size:.8rem;height: 100%;">
+    <table style="width:100%;padding:.5rem;border-collapse: separate;border-spacing: 0 1rem;">
+      <tr>
+        <th style="position: absolute;top:1rem;left:1rem;">Screen Rotation Detected</th>
+        <th style="position: absolute;top:1rem;right:1rem;"><a href="#" onclick="closeModalPop('warnMsg')">❌</a></th>
+      </tr>
+      <tr>
+        <td>Mobile Vertical is Best UI view 📱</td>
+      </tr>
+      <tr>
+        <td>Make sure Auto-rotation is OFF 🚫</td>
+      </tr>
+      <tr>
+        <td>Please Do Not Change Screen Sizes Repeatedly 💻</td>
+      </tr>
+      <tr>
+        <td>You Have Been Warned ❗ You May Proceed Now 👍 </td>
+      </tr>
+
   </div>
 
 

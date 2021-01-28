@@ -5,14 +5,14 @@ gsap.fromTo(
   { y: 200 },
   { duration: 1.5, ease: "power2.out", y: 0 }
 );
-function openModalPop() {
-  document.getElementById("pipDiv").style.display = "block";
+function openModalPop(divId) {
+  document.getElementById(divId).style.display = "block";
   gsap.fromTo(
     ".pipDiv",
-    { y: 50 },
-    { duration: 1, ease: "power2.out", y: 150 }
+    { y: 30 },
+    { duration: 1, ease: "power2.out", y: 130 }
   );
 }
-function closeModalPop() {
-  document.getElementById("pipDiv").style.display = "none";
+function closeModalPop(divId) {
+  document.getElementById(divId).style.display = "none";
 }

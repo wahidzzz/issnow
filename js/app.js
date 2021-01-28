@@ -5,6 +5,22 @@ var earth;
 // Predcition example http://api.open-notify.org/iss-pass.json?lat=45.0&lon=-122.3&alt=20&n=5
 
 function init() {
+  var counter = 0;
+  var supportsOrientationChange = "onorientationchange" in window,
+    orientationEvent = supportsOrientationChange
+      ? "orientationchange"
+      : "resize";
+
+  window.addEventListener(
+    orientationEvent,
+    function () {
+      if (!counter) {
+        openModalPop("warnMsg");
+        counter++;
+      }
+    },
+    false
+  );
   getNumPeople();
   getLocation();
   // document.getElementById("darkSwitch").checked = false;
@@ -71,7 +87,7 @@ function getNumPeople() {
   border-spacing: 0 1rem;">
   <tr>
     <th style="position: absolute;top:1rem;left:1rem;">People In Space</th>
-    <th style="position: absolute;top:1rem;right:1rem;"><a href="#" onclick="closeModalPop()">❌</a></th>
+    <th style="position: absolute;top:1rem;right:1rem;"><a href="#" onclick="closeModalPop('pipDiv')">❌</a></th>
   </tr>
   <tr>
     <th style="text-align: left;">Name</th>
@@ -104,42 +120,76 @@ function getLocation() {
 function geoSuccess(position) {
   var passTime = document.getElementById("pass-time");
   var passRow = `<table style="width:100%;padding:.5rem;border-collapse: separate;
-  border-spacing: 0 .6rem;">`;
-  console.log(new Date(1611851339 * 1000).toLocaleString());
+  border-spacing: 0 .3rem;">`;
   var lat = parseFloat(position.coords.latitude);
   var lng = parseFloat(position.coords.longitude);
-  var myHeaders = new Headers();
-  myHeaders.append("Access-Control-Allow-Origin", "*");
-
-  var requestOptions = {
-    method: "GET",
-    headers: myHeaders,
-    redirect: "follow",
+  console.log(lat, lng);
+  let config = {
+    method: "get",
+    url: `http://api.open-notify.org/iss-pass.json?lat=${lat}&lon=${lng}`,
+    headers: {
+      "Access-Control-Allow-Origin": "*",
+      "Content-Type": "text/html",
+    },
   };
 
-  fetch(
-    "http://api.open-notify.org/iss-pass.json?lat=19.0181&lon=72.8625",
-    requestOptions
-  )
-    .then((response) => response.text())
-    .then((result) => console.log(result))
-    .catch((error) => console.log("error", error));
-  // let config = {
-  //   method: "get",
-  //   url: "http://api.open-notify.org/iss-pass.json?lat=19.0181&lon=72.8625&",
-  //   headers: {
-  //     "Access-Control-Allow-Origin": "*",
-  //     "Content-Type": "text/html",
-  //   },
-  // };
+  var Test = {
+    message: "success",
+    request: {
+      altitude: 100,
+      datetime: 1611859715,
+      latitude: 19.0181,
+      longitude: 72.8625,
+      passes: 5,
+    },
+    response: [
+      {
+        duration: 414,
+        risetime: 1611862903,
+      },
+      {
+        duration: 596,
+        risetime: 1611905101,
+      },
+      {
+        duration: 587,
+        risetime: 1611910906,
+      },
+      {
+        duration: 622,
+        risetime: 1611940571,
+      },
+    ],
+  };
 
-  // axios(config)
-  //   .then((response) => {
-  //     console.log(JSON.stringify(response.data));
-  //   })
-  //   .catch((error) => {
-  //     console.log(error);
-  //   });
+  axios(config)
+    .then((res) => {
+      // // console.log(res);
+      // res = !res || res.isEmpty() ? Test : res;
+      // console.log(res);
+      res["response"].forEach((dataR) => {
+        var date = new Date(dataR["risetime"] * 1000).toLocaleString();
+        passRow += ` <tr>
+        <td>${date}</td>
+      </tr>`;
+      });
+      passRow += "</table>";
+      // console.log(passRow);
+      passTime.innerHTML += passRow;
+    })
+    .catch((error) => {
+      passRow += "<tr><td>IST/Demo Data</td></tr>";
+
+      Test["response"].forEach((dataR) => {
+        var date = new Date(dataR["risetime"] * 1000).toLocaleString();
+        passRow += ` <tr>
+        <td>${date}</td>
+      </tr>`;
+      });
+      passRow += "</table>";
+      passTime.innerHTML += passRow;
+      console.log(error);
+    });
 }
 function geoError() {
   console.log("Geocoder failed.");
