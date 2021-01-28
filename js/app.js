@@ -6,7 +6,7 @@ var earth;
 
 function init() {
   getNumPeople();
-  // getLocation();
+  getLocation();
   // document.getElementById("darkSwitch").checked = false;
   earth = new WE.map("earth_div");
   // http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png
@@ -50,10 +50,13 @@ function callIssNow(earth) {
         // console.log(before);
       });
 
-      marker.bindPopup("<b>Hey</b><br>I am international space station<br />", {
-        maxWidth: 150,
-        closeButton: true,
-      });
+      marker.bindPopup(
+        "<b>Hey 🤖,</b><br>I am international space station 🛰️<br />",
+        {
+          maxWidth: 150,
+          closeButton: true,
+        }
+      );
       // .openPopup();
 
       earth.setView([issLat, issLng], Math.round(earth.getZoom()));
@@ -64,10 +67,28 @@ function callIssNow(earth) {
     });
 }
 function getNumPeople() {
+  var dataRow = `<table style="width:100%;padding:.5rem;border-collapse: separate;
+  border-spacing: 0 1rem;">
+  <tr>
+    <th style="position: absolute;top:1rem;left:1rem;">People In Space</th>
+    <th style="position: absolute;top:1rem;right:1rem;"><a href="#" onclick="closeModalPop()">❌</a></th>
+  </tr>
+  <tr>
+    <th style="text-align: left;">Name</th>
+    <th style="text-align: left;">Craft</th>
+  </tr>`;
   axios
     .get("http://api.open-notify.org/astros.json")
     .then(function (res) {
-      console.log(res);
+      let totalPeople = res.data.people.length;
+      for (let i = 0; i < totalPeople; i++) {
+        dataRow += `<tr>
+        <td>${res.data.people[i].name}</td>
+        <td>${res.data.people[i].craft}</td>
+      </tr>`;
+      }
+      dataRow += `</table>`;
+      document.getElementById("pipDiv").innerHTML += dataRow;
     })
     .catch(function (err) {
       console.log(err);
@@ -81,23 +102,44 @@ function getLocation() {
   }
 }
 function geoSuccess(position) {
+  var passTime = document.getElementById("pass-time");
+  var passRow = `<table style="width:100%;padding:.5rem;border-collapse: separate;
+  border-spacing: 0 .6rem;">`;
+  console.log(new Date(1611851339 * 1000).toLocaleString());
   var lat = parseFloat(position.coords.latitude);
   var lng = parseFloat(position.coords.longitude);
-  let config = {
-    method: "get",
-    url: "http://api.open-notify.org/iss-pass.json?lat=19.0181&lon=72.8625&",
-    headers: {
-      "Access-Control-Allow-Origin": "*",
-    },
+  var myHeaders = new Headers();
+  myHeaders.append("Access-Control-Allow-Origin", "*");
+
+  var requestOptions = {
+    method: "GET",
+    headers: myHeaders,
+    redirect: "follow",
   };
 
-  axios(config)
-    .then((response) => {
-      console.log(JSON.stringify(response.data));
-    })
-    .catch((error) => {
-      console.log(error);
-    });
+  fetch(
+    "http://api.open-notify.org/iss-pass.json?lat=19.0181&lon=72.8625",
+    requestOptions
+  )
+    .then((response) => response.text())
+    .then((result) => console.log(result))
+    .catch((error) => console.log("error", error));
+  // let config = {
+  //   method: "get",
+  //   url: "http://api.open-notify.org/iss-pass.json?lat=19.0181&lon=72.8625&",
+  //   headers: {
+  //     "Access-Control-Allow-Origin": "*",
+  //     "Content-Type": "text/html",
+  //   },
+  // };
+
+  // axios(config)
+  //   .then((response) => {
+  //     console.log(JSON.stringify(response.data));
+  //   })
+  //   .catch((error) => {
+  //     console.log(error);
+  //   });
 }
 function geoError() {
   console.log("Geocoder failed.");

@@ -10,6 +10,9 @@ function openModalPop() {
   gsap.fromTo(
     ".pipDiv",
     { y: 50 },
-    { duration: 1.5, ease: "power2.out", y: 150 }
+    { duration: 1, ease: "power2.out", y: 150 }
   );
+}
+function closeModalPop() {
+  document.getElementById("pipDiv").style.display = "none";
 }
