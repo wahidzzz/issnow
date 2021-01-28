@@ -3,6 +3,7 @@
 
 <head>
   <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <meta charset=utf-8 />
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   <!-- <script src="http://www.webglearth.com/v2/api.js"></script> -->
@@ -21,21 +22,44 @@
 
   <nav class="rounded navMenu">
     <ul>
-      <li><a href="#">Home</a></li>
-      <li><a href="#openModal">Astronouts Details</a></li>
+      <li><a href="./">Home</a></li>
+      <li><a href='#' onclick="openModalPop()">Astronouts Details</a></li>
       <li><button id="speaker" onclick="speakerClick()">🔊</button></li>
     </ul>
   </nav>
-  <div class="rounded pipDiv">
-    Somepeople
+  <div class="rounded pipDiv" id="pipDiv">
+    <table style="width:100%;padding:.5rem;border-collapse: separate;
+      border-spacing: 0 1rem;">
+      <tr style="margin-bottom:2rem;">
+        <th style="text-align: left;">People In Space</th>
+        <th>X</th>
+      </tr>
+      <tr>
+        <td>Lat, Lng</td>
+        <td>122.33,0.122</td>
+      </tr>
+
+      <tr>
+        <td>Speed</td>
+        <td>23000 km/h</td>
+      </tr>
+      <tr>
+        <td>Location</td>
+        <td>Mumbai</td>
+      </tr>
+      <tr>
+        <td>Last Updated</td>
+        <td>Timestamp</td>
+      </tr>
+    </table>
   </div>
 
   <div id="earth_div"></div>
 
   <div class="rounded dataDiv">
     <div class="tab">
-      <button class="tablinks active" onclick="openCity(event, 'details')">Current Position</button>
-      <button class="tablinks" onclick="openCity(event, 'pass-time')">Pass Time</button>
+      <button class="tablinks active" onclick="openTab(event, 'details')">Current Position</button>
+      <button class="tablinks" onclick="openTab(event, 'pass-time')">Pass Time</button>
       <button class="tablinks" style="float:right">
         <div class="md-switch sm">
           <input type="checkbox" id="follow-iss" name="follow-iss" title="Set to Track ISS"

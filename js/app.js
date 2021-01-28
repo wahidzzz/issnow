@@ -128,7 +128,7 @@ function speakerClick() {
 //   callIssNow(earth);
 // }, 3000);
 
-function openCity(evt, cityName) {
+function openTab(evt, cityName) {
   // Declare all variables
   var i, tabcontent, tablinks;
 
