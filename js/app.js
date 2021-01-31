@@ -1,6 +1,32 @@
 var earth;
-var mapBoxApiKey =
-  "pk.eyJ1Ijoid2FoaWR6enoiLCJhIjoiY2trbDc2Y3M1MnZ5cDJub2NlMHl2cGY0ciJ9.128JeDyi9jpnww1jN2G1TA";
+var Test = {
+  message: "success",
+  request: {
+    altitude: 100,
+    datetime: 1611859715,
+    latitude: 19.0181,
+    longitude: 72.8625,
+    passes: 5,
+  },
+  response: [
+    {
+      duration: 414,
+      risetime: 1611862903,
+    },
+    {
+      duration: 596,
+      risetime: 1611905101,
+    },
+    {
+      duration: 587,
+      risetime: 1611910906,
+    },
+    {
+      duration: 622,
+      risetime: 1611940571,
+    },
+  ],
+};
 
 // Current People in Space http://api.open-notify.org/astros.json
 // Passing position http://api.open-notify.org/iss-pass.json?lat=LAT&lon=LON
@@ -140,35 +166,6 @@ function geoSuccess(position) {
     },
   };
 
-  var Test = {
-    message: "success",
-    request: {
-      altitude: 100,
-      datetime: 1611859715,
-      latitude: 19.0181,
-      longitude: 72.8625,
-      passes: 5,
-    },
-    response: [
-      {
-        duration: 414,
-        risetime: 1611862903,
-      },
-      {
-        duration: 596,
-        risetime: 1611905101,
-      },
-      {
-        duration: 587,
-        risetime: 1611910906,
-      },
-      {
-        duration: 622,
-        risetime: 1611940571,
-      },
-    ],
-  };
-
   axios(config)
     .then((res) => {
       // // console.log(res);
@@ -276,6 +273,7 @@ function setIssData(lat, lng) {
           ? res.data.locality
           : res.data.city;
       currentPlace.split(" ").splice(0, 2).join(" ");
+      console.log(currentPlace);
       var issData = `<table style="width:100%;padding:.5rem;border-collapse: separate;
       border-spacing: 0 .6rem;">
         <tr>
