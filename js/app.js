@@ -272,8 +272,9 @@ function setIssData(lat, lng) {
         res.data.city === "" || res.data.city === null
           ? res.data.locality
           : res.data.city;
-      currentPlace.split(" ").splice(0, 2).join(" ");
-      console.log(currentPlace);
+      // console.log(currentPlace);
+      currentPlace = currentPlace.split(" ").splice(0, 2).join(" ");
+
       var issData = `<table style="width:100%;padding:.5rem;border-collapse: separate;
       border-spacing: 0 .6rem;">
         <tr>
