@@ -16,14 +16,16 @@
 </head>
 
 <body onload="init()">
-
+  <div class='stars'></div>
+  <div class='twinkling'></div>
+  <div class='clouds'></div>
 
 
 
   <nav class="rounded navMenu">
     <ul>
-      <li><a href="./">Home</a></li>
-      <li><a href='#' onclick="openModalPop('pipDiv')">Astronouts Details</a></li>
+      <!-- <li><a href="./">Home</a></li> -->
+      <li><a href='#' onclick="openModalPop('pipDiv')">👨‍🚀 Astronouts</a></li>
       <li><button id="speaker" onclick="speakerClick()">🔊</button></li>
     </ul>
   </nav>
@@ -34,8 +36,9 @@
 
   <div class="rounded dataDiv">
     <div class="tab">
-      <button class="tablinks active" onclick="openTab(event, 'details')">Current Position</button>
+      <button class="tablinks active" onclick="openTab(event, 'details')">ISS Now</button>
       <button class="tablinks" onclick="openTab(event, 'pass-time')">Pass Time</button>
+      <button class="tablinks" onclick="openTab(event, 'map-options')">Map Options</button>
       <!-- <button class="tablinks" style="float:right">
         <div class="md-switch sm">
           <input type="checkbox" id="follow-iss" name="follow-iss" title="Set to Track ISS"
@@ -47,7 +50,7 @@
 
     <!-- Tab content -->
     <div id="details" class="tabcontent" style="display: block;">
-      <table style="width:100%;padding:.5rem;border-collapse: separate;
+      <!-- <table style="width:100%;padding:.5rem;border-collapse: separate;
       border-spacing: 0 .6rem;">
         <tr>
           <td>Lat, Lng</td>
@@ -56,7 +59,7 @@
 
         <tr>
           <td>Speed</td>
-          <td>23000 km/h</td>
+          <td>~27,600 km/h</td>
         </tr>
         <tr>
           <td>Location</td>
@@ -66,7 +69,7 @@
           <td>Last Updated</td>
           <td>Timestamp</td>
         </tr>
-      </table>
+      </table> -->
     </div>
 
     <div id="pass-time" class="tabcontent">
@@ -91,6 +94,9 @@
       </table> -->
     </div>
 
+    <div id="map-options" class="tabcontent">
+      <h1>Hellow Orld</h1>
+    </div>
   </div>
   <div id="warnMsg" class="rounded" style="top:6rem;font-size:.8rem;height: 100%;">
     <table style="width:100%;padding:.5rem;border-collapse: separate;border-spacing: 0 1rem;">

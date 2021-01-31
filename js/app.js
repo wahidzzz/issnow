@@ -1,4 +1,6 @@
 var earth;
+var mapBoxApiKey =
+  "pk.eyJ1Ijoid2FoaWR6enoiLCJhIjoiY2trbDc2Y3M1MnZ5cDJub2NlMHl2cGY0ciJ9.128JeDyi9jpnww1jN2G1TA";
 
 // Current People in Space http://api.open-notify.org/astros.json
 // Passing position http://api.open-notify.org/iss-pass.json?lat=LAT&lon=LON
@@ -31,8 +33,12 @@ function init() {
   WE.tileLayer(
     "https://api.maptiler.com/maps/hybrid/{z}/{x}/{y}.jpg?key=P96ofHivGNVZ2xp6Umna"
   ).addTo(earth);
-  earth.setView([21.7679, 78.8718], 3);
+  earth.setView([21.7679, 78.8718], 2);
   callIssNow(earth);
+
+  earth.on("click", function (e) {
+    console.log(e.latlng.lat + ", " + e.latlng.lng);
+  });
 }
 
 function callIssNow(earth) {
@@ -51,20 +57,21 @@ function callIssNow(earth) {
       //   var marker = WE.marker([parseFloat(lat), parseFloat(lng)]).addTo(earth);
       var issLat = parseFloat(lat);
       var issLng = parseFloat(lng);
+      setIssData(lat, lng);
       var marker = WE.marker([issLat, issLng]).addTo(earth);
 
       // Start a simple rotation animation
 
-      var before = null;
-      requestAnimationFrame(function animate(now) {
-        var c = earth.getPosition();
-        var elapsed = before ? now - before : 0;
-        before = now;
-        earth.setCenter([c[0], c[1] + 0.1 * (elapsed / 100)]);
-        requestAnimationFrame(animate);
-        // console.log(now);
-        // console.log(before);
-      });
+      // var before = null;
+      // requestAnimationFrame(function animate(now) {
+      //   var c = earth.getPosition();
+      //   var elapsed = before ? now - before : 0;
+      //   before = now;
+      //   earth.setCenter([c[0], c[1] + 0.1 * (elapsed / 100)]);
+      //   requestAnimationFrame(animate);
+      //   // console.log(now);
+      //   // console.log(before);
+      // });
 
       marker.bindPopup(
         "<b>Hey 🤖,</b><br>I am international space station 🛰️<br />",
@@ -216,9 +223,6 @@ function speakerClick() {
     false
   );
 }
-// setInterval(function () {
-//   callIssNow(earth);
-// }, 3000);
 
 function openTab(evt, cityName) {
   // Declare all variables
@@ -240,3 +244,88 @@ function openTab(evt, cityName) {
   document.getElementById(cityName).style.display = "block";
   evt.currentTarget.className += " active";
 }
+function setIssData(lat, lng) {
+  var detailsTab = document.getElementById("details");
+
+  var currentdate = new Date();
+  var lastCalledDate =
+    currentdate.getDate() +
+    "/" +
+    (currentdate.getMonth() + 1) +
+    "/" +
+    currentdate.getFullYear() +
+    " @ " +
+    currentdate.getHours() +
+    ":" +
+    currentdate.getMinutes() +
+    ":" +
+    currentdate.getSeconds();
+
+  var currentPlace;
+  // https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${lat}&longitude=${lng}&localityLanguage=en
+
+  axios
+    .get(
+      `https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${lat}&longitude=${lng}&localityLanguage=en`
+    )
+    .then(function (res) {
+      // console.log(res);
+
+      currentPlace =
+        res.data.city === "" || res.data.city === null
+          ? res.data.locality
+          : res.data.city;
+      currentPlace.split(" ").splice(0, 2).join(" ");
+      var issData = `<table style="width:100%;padding:.5rem;border-collapse: separate;
+      border-spacing: 0 .6rem;">
+        <tr>
+          <td>Lat, Lng</td>
+          <td>${lat + ", " + lng}</td>
+        </tr>
+
+        <tr>
+          <td>Speed:</td>
+          <td>~27,600 km/h 🚀 </td>
+        </tr>
+        <tr>
+          <td>Location:</td>
+          <td>${currentPlace}</td>
+        </tr>
+        <tr>
+          <td>Last Sync:</td>
+          <td>${lastCalledDate}</td>
+        </tr>
+      </table>`;
+
+      detailsTab.innerHTML = issData;
+    })
+    .catch(function (err) {
+      console.log(err);
+      currentPlace = "Can't Locate 👽";
+      var issData = `<table style="width:100%;padding:.5rem;border-collapse: separate;
+      border-spacing: 0 .6rem;">
+        <tr>
+          <td>Lat, Lng</td>
+          <td>${lat + ", " + lng}</td>
+        </tr>
+
+        <tr>
+          <td>Speed</td>
+          <td>~27,600 km/h 🚀 </td>
+        </tr>
+        <tr>
+          <td>Location</td>
+          <td>${currentPlace}</td>
+        </tr>
+        <tr>
+          <td>Last Sync</td>
+          <td>${lastCalledDate}</td>
+        </tr>
+      </table>`;
+
+      detailsTab.innerHTML = issData;
+    });
+}
+setInterval(function () {
+  callIssNow(earth);
+}, 3000);
