@@ -8,7 +8,7 @@ gsap.fromTo(
 function openModalPop(divId) {
   document.getElementById(divId).style.display = "block";
   gsap.fromTo(
-    ".pipDiv",
+    "." + divId,
     { y: 30 },
     { duration: 1, ease: "power2.out", y: 130 }
   );

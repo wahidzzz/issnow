@@ -24,12 +24,21 @@
 
   <nav class="rounded navMenu">
     <ul>
-      <li><a href="#">Place Holder</a></li>
-      <li><a href='#' onclick="openModalPop('pipDiv')">👨‍🚀 Astronouts</a></li>
+      <li><a href='#' title="People in Space" onclick="openModalPop('pipDiv')">👨‍🚀 Astronouts</a></li>
+      <li><a href="#" title="NASA Astronomy Picture of the Day" onclick="openModalPop('apodDiv')">📷 NASA APOD</a></li>
       <li><button id="speaker" onclick="speakerClick()">🔊</button></li>
     </ul>
   </nav>
   <div class="rounded pipDiv" id="pipDiv"></div>
+  <div class="rounded apodDiv" id="apodDiv">
+    <table style="width:100%;padding:.5rem;border-collapse: separate;
+  border-spacing: 0 1rem;">
+      <tr>
+        <th style="position: absolute;top:1rem;left:1rem;">NASA Astronomy Picture of the Day</th>
+        <th style="position: absolute;top:1rem;right:1rem;"><a href="#" onclick="closeModalPop('apodDiv')">❌</a></th>
+      </tr>
+    </table>
+  </div>
 
 
   <div id="earth_div"></div>
@@ -38,7 +47,7 @@
     <div class="tab">
       <button class="tablinks active" onclick="openTab(event, 'details')">ISS Now</button>
       <button class="tablinks" onclick="openTab(event, 'pass-time')">Pass Time</button>
-      <button class="tablinks" onclick="openTab(event, 'map-options')">Map Options</button>
+      <button class="tablinks" onclick="openTab(event, 'weather')">Weather Details</button>
       <!-- <button class="tablinks" style="float:right">
         <div class="md-switch sm">
           <input type="checkbox" id="follow-iss" name="follow-iss" title="Set to Track ISS"
@@ -94,7 +103,7 @@
       </table> -->
     </div>
 
-    <div id="map-options" class="tabcontent">
+    <div id="weather" class="tabcontent">
       <h1>Hellow Orld</h1>
     </div>
   </div>

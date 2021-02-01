@@ -69,6 +69,7 @@ a {
 }
 
 .pipDiv,
+.apodDiv,
 #warnMsg {
   display: none;
   position: relative;
@@ -264,6 +265,7 @@ a {
     z-index: 999999;
   }
   .pipDiv,
+  .apodDiv,
   #warnMsg {
     width: 30%;
   }
@@ -280,6 +282,7 @@ a {
     z-index: 999999;
   }
   .pipDiv,
+  .apodDiv,
   #warnMsg {
     width: 50%;
   }

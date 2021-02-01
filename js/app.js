@@ -51,6 +51,7 @@ function init() {
   );
   getNumPeople();
   getLocation();
+  getNasaApod();
   // document.getElementById("darkSwitch").checked = false;
   earth = new WE.map("earth_div");
   // http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png
@@ -97,18 +98,16 @@ function callIssNow(earth) {
 
       var issData = `<table style="width:100%;padding:.5rem;border-collapse: separate;
       border-spacing: 0 .6rem;">
+      <tr>
+          <td>Speed 🚀</td>
+          <td>~27,600 km/h</td>
+        </tr>
         <tr>
-          <td>Lat, Lng</td>
+          <td>Lat,Lng 📍 </td>
           <td>${lat + ", " + lng}</td>
         </tr>
-
         <tr>
-          <td>Speed:</td>
-          <td>~27,600 km/h 🚀 </td>
-        </tr>
-       
-        <tr>
-          <td>Last Sync:</td>
+          <td>Last Sync ✔️</td>
           <td>${lastCalledDate}</td>
         </tr>
       </table>`;
@@ -287,6 +286,18 @@ function openTab(evt, cityName) {
 //   });
 // }
 
-setInterval(function () {
-  callIssNow(earth);
-}, 3000);
+function getNasaApod() {
+  axios
+    .get(
+      "https://api.nasa.gov/planetary/apod?api_key=lrBdjfSktWU53ziTLIiFweAjRzAkGokSHfhmJwRf"
+    )
+    .then(function (res) {
+      console.log(res);
+    })
+    .catch(function (err) {
+      console.log(err);
+    });
+}
+// setInterval(function () {
+//   callIssNow(earth);
+// }, 3000);
