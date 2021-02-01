@@ -61,10 +61,6 @@ function init() {
   ).addTo(earth);
   earth.setView([21.7679, 78.8718], 2);
   callIssNow(earth);
-
-  earth.on("click", function (e) {
-    console.log(e.latlng.lat + ", " + e.latlng.lng);
-  });
 }
 
 function callIssNow(earth) {
@@ -78,13 +74,46 @@ function callIssNow(earth) {
       //   console.log(res["data"]["iss_position"]);
       var lat = res["data"]["iss_position"]["latitude"];
       var lng = res["data"]["iss_position"]["longitude"];
-      // console.log(parseFloat(lat), parseFloat(lng));
-
-      //   var marker = WE.marker([parseFloat(lat), parseFloat(lng)]).addTo(earth);
       var issLat = parseFloat(lat);
       var issLng = parseFloat(lng);
-      setIssData(lat, lng);
-      var marker = WE.marker([issLat, issLng]).addTo(earth);
+
+      var detailsTab = document.getElementById("details");
+
+      var currentdate = new Date();
+      var lastCalledDate =
+        currentdate.getDate() +
+        "/" +
+        (currentdate.getMonth() + 1) +
+        "/" +
+        currentdate.getFullYear() +
+        " @ " +
+        currentdate.getHours() +
+        ":" +
+        currentdate.getMinutes() +
+        ":" +
+        currentdate.getSeconds();
+
+      // https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${lat}&longitude=${lng}&localityLanguage=en
+
+      var issData = `<table style="width:100%;padding:.5rem;border-collapse: separate;
+      border-spacing: 0 .6rem;">
+        <tr>
+          <td>Lat, Lng</td>
+          <td>${lat + ", " + lng}</td>
+        </tr>
+
+        <tr>
+          <td>Speed:</td>
+          <td>~27,600 km/h 🚀 </td>
+        </tr>
+       
+        <tr>
+          <td>Last Sync:</td>
+          <td>${lastCalledDate}</td>
+        </tr>
+      </table>`;
+
+      detailsTab.innerHTML = issData;
 
       // Start a simple rotation animation
 
@@ -98,6 +127,7 @@ function callIssNow(earth) {
       //   // console.log(now);
       //   // console.log(before);
       // });
+      var marker = WE.marker([issLat, issLng]).addTo(earth);
 
       marker.bindPopup(
         "<b>Hey 🤖,</b><br>I am international space station 🛰️<br />",
@@ -109,11 +139,13 @@ function callIssNow(earth) {
       // .openPopup();
 
       earth.setView([issLat, issLng], Math.round(earth.getZoom()));
+      // marker.closePopup();
     })
     .catch(function (error) {
       // handle error
       console.log(error);
     });
+  // addMarker(earth);
 }
 function getNumPeople() {
   var dataRow = `<table style="width:100%;padding:.5rem;border-collapse: separate;
@@ -241,90 +273,20 @@ function openTab(evt, cityName) {
   document.getElementById(cityName).style.display = "block";
   evt.currentTarget.className += " active";
 }
-function setIssData(lat, lng) {
-  var detailsTab = document.getElementById("details");
+// function addMarker(earth) {
+//   earth.on("click", function (e) {
+//     e.preventDefault();
+//     // console.log(e.latlng.lat + ", " + e.latlng.lng);
+//     var marker = WE.marker([e.latlng.lat, e.latlng.lng]).addTo(earth);
 
-  var currentdate = new Date();
-  var lastCalledDate =
-    currentdate.getDate() +
-    "/" +
-    (currentdate.getMonth() + 1) +
-    "/" +
-    currentdate.getFullYear() +
-    " @ " +
-    currentdate.getHours() +
-    ":" +
-    currentdate.getMinutes() +
-    ":" +
-    currentdate.getSeconds();
+//     marker.bindPopup("Hello World", {
+//       maxWidth: 150,
+//       closeButton: true,
+//     });
+//     return marker;
+//   });
+// }
 
-  var currentPlace;
-  // https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${lat}&longitude=${lng}&localityLanguage=en
-
-  axios
-    .get(
-      `https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${lat}&longitude=${lng}&localityLanguage=en`
-    )
-    .then(function (res) {
-      // console.log(res);
-
-      currentPlace =
-        res.data.city === "" || res.data.city === null
-          ? res.data.locality
-          : res.data.city;
-      // console.log(currentPlace);
-      currentPlace = currentPlace.split(" ").splice(0, 2).join(" ");
-
-      var issData = `<table style="width:100%;padding:.5rem;border-collapse: separate;
-      border-spacing: 0 .6rem;">
-        <tr>
-          <td>Lat, Lng</td>
-          <td>${lat + ", " + lng}</td>
-        </tr>
-
-        <tr>
-          <td>Speed:</td>
-          <td>~27,600 km/h 🚀 </td>
-        </tr>
-        <tr>
-          <td>Location:</td>
-          <td>${currentPlace}</td>
-        </tr>
-        <tr>
-          <td>Last Sync:</td>
-          <td>${lastCalledDate}</td>
-        </tr>
-      </table>`;
-
-      detailsTab.innerHTML = issData;
-    })
-    .catch(function (err) {
-      console.log(err);
-      currentPlace = "Can't Locate 👽";
-      var issData = `<table style="width:100%;padding:.5rem;border-collapse: separate;
-      border-spacing: 0 .6rem;">
-        <tr>
-          <td>Lat, Lng</td>
-          <td>${lat + ", " + lng}</td>
-        </tr>
-
-        <tr>
-          <td>Speed</td>
-          <td>~27,600 km/h 🚀 </td>
-        </tr>
-        <tr>
-          <td>Location</td>
-          <td>${currentPlace}</td>
-        </tr>
-        <tr>
-          <td>Last Sync</td>
-          <td>${lastCalledDate}</td>
-        </tr>
-      </table>`;
-
-      detailsTab.innerHTML = issData;
-    });
-}
 setInterval(function () {
   callIssNow(earth);
 }, 3000);

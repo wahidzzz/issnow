@@ -252,4 +252,36 @@ a {
     background-position: 10000px 0;
   }
 }
+
+@media only screen and (min-width: 992px) {
+  nav {
+    width: 30%;
+  }
+  .dataDiv {
+    width: 30%;
+    right: 0.5rem !important;
+    left: auto;
+    z-index: 999999;
+  }
+  .pipDiv,
+  #warnMsg {
+    width: 30%;
+  }
+}
+
+@media only screen and (min-width: 420px) and (max-width: 834px) {
+  nav {
+    width: 50%;
+  }
+  .dataDiv {
+    width: 50%;
+    right: 0.5rem !important;
+    left: auto;
+    z-index: 999999;
+  }
+  .pipDiv,
+  #warnMsg {
+    width: 50%;
+  }
+}
 /*# sourceMappingURL=style.css.map */
