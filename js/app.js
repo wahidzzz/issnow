@@ -287,16 +287,36 @@ function openTab(evt, cityName) {
 // }
 
 function getNasaApod() {
+  var apodData = document.getElementById("apodDiv");
+  apodData.innerHTML = `<table style="width:100%;padding:.5rem;border-collapse: separate;
+  border-spacing: 0 1rem;">
+      <tr>
+        <th style="position: absolute;top:1rem;left:1rem;">NASA Astronomy Picture of the Day</th>
+        <th style="position: absolute;top:1rem;right:1rem;"><a href="#" onclick="closeModalPop('apodDiv')">❌</a></th>
+      </tr>`;
   axios
     .get(
       "https://api.nasa.gov/planetary/apod?api_key=lrBdjfSktWU53ziTLIiFweAjRzAkGokSHfhmJwRf"
     )
     .then(function (res) {
       console.log(res);
+      var image = res.data.url;
+      apodData.innerHTML += `<tr><a href="#" onclick="createLightBox('${image}')">
+        <img src="${image}" alt="image" width="350" height="350" />
+      </a></tr></table>`;
     })
     .catch(function (err) {
       console.log(err);
+      apodData.innerHTML +=
+        "<tr><h3>Sorry, Could'nt Connect to NASA 😔</h3></tr></table>";
     });
+}
+function createLightBox(image) {
+  closeModalPop("apodDiv");
+  const instance = basicLightbox.create(`
+  <img src="${image}" width="800" height="600">
+`);
+  instance.show();
 }
 // setInterval(function () {
 //   callIssNow(earth);

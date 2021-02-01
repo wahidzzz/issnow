@@ -211,7 +211,9 @@ a {
     background-position: 10000px 0;
   }
 }
-
+.basicLightbox {
+  z-index: 999999999 !important;
+}
 @media only screen and (min-width: 992px) {
   nav {
     width: 30%;
