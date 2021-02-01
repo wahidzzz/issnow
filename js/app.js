@@ -147,6 +147,7 @@ function callIssNow(earth) {
   // addMarker(earth);
 }
 function getNumPeople() {
+  closeModalPop("apodDiv");
   var dataRow = `<table style="width:100%;padding:.5rem;border-collapse: separate;
   border-spacing: 0 1rem;">
   <tr>
@@ -287,6 +288,7 @@ function openTab(evt, cityName) {
 // }
 
 function getNasaApod() {
+  closeModalPop("pipDiv");
   var apodData = document.getElementById("apodDiv");
   apodData.innerHTML = `<table style="width:100%;padding:.5rem;border-collapse: separate;
   border-spacing: 0 1rem;">
@@ -302,7 +304,7 @@ function getNasaApod() {
       console.log(res);
       var image = res.data.url;
       apodData.innerHTML += `<tr><a href="#" onclick="createLightBox('${image}')">
-        <img src="${image}" alt="image" width="350" height="350" />
+        <img src="${image}" alt="image" width="350" height="350" style="width: 90%;height: 90%;"/>
       </a></tr></table>`;
     })
     .catch(function (err) {

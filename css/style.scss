@@ -29,6 +29,7 @@ body {
   width: 100%;
 }
 nav {
+  font-size: 0.9rem;
   position: absolute;
   top: 1.5rem;
   right: 0.5rem;
@@ -211,12 +212,19 @@ a {
     background-position: 10000px 0;
   }
 }
+.apodDiv img {
+  border: 10px solid $textColor;
+}
+.apodDiv th {
+  font-size: 0.8rem;
+}
 .basicLightbox {
   z-index: 999999999 !important;
 }
 @media only screen and (min-width: 992px) {
   nav {
     width: 30%;
+    font-size: 1rem;
   }
   .dataDiv {
     width: 30%;
@@ -229,10 +237,14 @@ a {
   #warnMsg {
     width: 30%;
   }
+  .apodDiv th {
+    font-size: 1rem;
+  }
 }
 @media only screen and (min-width: 420px) and (max-width: 834px) {
   nav {
     width: 50%;
+    font-size: 1rem;
   }
   .dataDiv {
     width: 50%;
