@@ -298,13 +298,17 @@ function getNasaApod() {
     .then(function (res) {
       console.log(res);
       var image = res.data.url;
+      var title = res.data.title;
+      var copy = res.data.copyright;
+      var date = res.data.date;
       apodData.innerHTML += `
         <tr>
-          <td><a href="#" onclick="createLightBox('${image}')">
-                <img src="${image}" alt="image" width="350" height="350" style="width: 90%;height: 90%;"/>
+          <td><a href="#" onclick="createLightBox('${image}','${title}','${copy}','${date}')">
+                <img src="${image}" alt="NASA APOD" width="350" height="350" style="width: 95%;height: 90%;"/>
               </a>
           </td>
         </tr>
+       
       </table>`;
     })
     .catch(function (err) {
@@ -313,21 +317,26 @@ function getNasaApod() {
         "<tr><h3>Sorry, Could'nt Connect to NASA 😔</h3></tr></table>";
     });
 }
-function createLightBox(image) {
+function createLightBox(image, title, copy, date) {
   closeModalPop("apodDiv");
   const instance = basicLightbox.create(`
-  <img src="${image}" width="800" height="600">
+  <div style="padding:1rem;">
+    <h3 style="color:white;padding:.5rem;">${title}</h3>
+    <img src="${image}" width="800" height="600" style="width: 90%;height:90%;">
+    <div style="color:white;">
+      <p>&copy; ${copy}</p><p>${date}</p><p><a href='https://apod.nasa.gov/apod/astropix.html' target='_blank'><u>Visit NASA ></u></a></p>
+    </div>
+  </div>
+
 `);
   instance.show();
 }
 function trackISS() {
   if (document.getElementById("track-iss").checked) {
-    console.log("checked");
     trackIss = setInterval(function () {
       callIssNow(earth);
     }, 3000);
   } else if (document.getElementById("animate-earth").checked) {
-    console.log("un-checked");
     clearInterval(trackIss);
 
     var before = null;
