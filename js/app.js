@@ -27,6 +27,7 @@ var Test = {
     },
   ],
 };
+var trackIss;
 
 // Current People in Space http://api.open-notify.org/astros.json
 // Passing position http://api.open-notify.org/iss-pass.json?lat=LAT&lon=LON
@@ -34,6 +35,7 @@ var Test = {
 
 function init() {
   var counter = 0;
+
   var supportsOrientationChange = "onorientationchange" in window,
     orientationEvent = supportsOrientationChange
       ? "orientationchange"
@@ -49,6 +51,7 @@ function init() {
     },
     false
   );
+  trackISS();
   getNumPeople();
   getLocation();
   getNasaApod();
@@ -56,10 +59,12 @@ function init() {
   earth = new WE.map("earth_div");
   // http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png
   // dark theme :"https://api.maptiler.com/maps/toner/{z}/{x}/{y}.png?key=P96ofHivGNVZ2xp6Umna"
+  //https://cartodb-basemaps-{s}.global.ssl.fastly.net/dark_all/{z}/{x}/{y}.png"
+  // https://b.tile.openstreetmap.org/${z}/${x}/${y}.png
 
-  WE.tileLayer(
-    "https://api.maptiler.com/maps/hybrid/{z}/{x}/{y}.jpg?key=P96ofHivGNVZ2xp6Umna"
-  ).addTo(earth);
+  WE.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png").addTo(
+    earth
+  );
   earth.setView([21.7679, 78.8718], 2);
   callIssNow(earth);
 }
@@ -116,16 +121,6 @@ function callIssNow(earth) {
 
       // Start a simple rotation animation
 
-      // var before = null;
-      // requestAnimationFrame(function animate(now) {
-      //   var c = earth.getPosition();
-      //   var elapsed = before ? now - before : 0;
-      //   before = now;
-      //   earth.setCenter([c[0], c[1] + 0.1 * (elapsed / 100)]);
-      //   requestAnimationFrame(animate);
-      //   // console.log(now);
-      //   // console.log(before);
-      // });
       var marker = WE.marker([issLat, issLng]).addTo(earth);
 
       marker.bindPopup(
@@ -188,7 +183,7 @@ function geoSuccess(position) {
   border-spacing: 0 .3rem;">`;
   var lat = parseFloat(position.coords.latitude);
   var lng = parseFloat(position.coords.longitude);
-  console.log(lat, lng);
+  // console.log(lat, lng);
   let config = {
     method: "get",
     url: `http://api.open-notify.org/iss-pass.json?lat=${lat}&lon=${lng}`,
@@ -303,9 +298,14 @@ function getNasaApod() {
     .then(function (res) {
       console.log(res);
       var image = res.data.url;
-      apodData.innerHTML += `<tr><a href="#" onclick="createLightBox('${image}')">
-        <img src="${image}" alt="image" width="350" height="350" style="width: 90%;height: 90%;"/>
-      </a></tr></table>`;
+      apodData.innerHTML += `
+        <tr>
+          <td><a href="#" onclick="createLightBox('${image}')">
+                <img src="${image}" alt="image" width="350" height="350" style="width: 90%;height: 90%;"/>
+              </a>
+          </td>
+        </tr>
+      </table>`;
     })
     .catch(function (err) {
       console.log(err);
@@ -320,6 +320,29 @@ function createLightBox(image) {
 `);
   instance.show();
 }
-// setInterval(function () {
-//   callIssNow(earth);
-// }, 3000);
+function trackISS() {
+  if (document.getElementById("track-iss").checked) {
+    console.log("checked");
+    trackIss = setInterval(function () {
+      callIssNow(earth);
+    }, 3000);
+  } else if (document.getElementById("animate-earth").checked) {
+    console.log("un-checked");
+    clearInterval(trackIss);
+
+    var before = null;
+    requestAnimationFrame(function animate(now) {
+      if (document.getElementById("track-iss").checked) {
+        return false;
+      } else {
+        var c = earth.getPosition();
+        var elapsed = before ? now - before : 0;
+        before = now;
+        earth.setCenter([c[0], c[1] + 0.1 * (elapsed / 100)]);
+        requestAnimationFrame(animate);
+      }
+    });
+  } else {
+    console.log("Beep Bop, Do Dee De Do ! I am robot 🤖");
+  }
+}
