@@ -62,7 +62,7 @@ function init() {
   //https://cartodb-basemaps-{s}.global.ssl.fastly.net/dark_all/{z}/{x}/{y}.png"
   // https://b.tile.openstreetmap.org/${z}/${x}/${y}.png
 
-  WE.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png").addTo(
+  WE.tileLayer("http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png").addTo(
     earth
   );
   earth.setView([21.7679, 78.8718], 2);
@@ -75,8 +75,9 @@ function callIssNow(earth) {
     .then(function (res) {
       // handle success
       // console.log(res);
+
       var markIcon = document.getElementsByClassName("we-pm-icon");
-      while (markIcon.length > 0) markIcon[0].remove();
+      while (markIcon.length > 0) markIcon[0].parentElement.remove();
       //   console.log(res["data"]["iss_position"]);
       var lat = res["data"]["iss_position"]["latitude"];
       var lng = res["data"]["iss_position"]["longitude"];
@@ -131,8 +132,8 @@ function callIssNow(earth) {
         }
       );
       // .openPopup();
-
-      earth.setView([issLat, issLng], Math.round(earth.getZoom()));
+      earth.panTo([issLat, issLng], { heading: 90, tilt: 25, duration: 1 });
+      // earth.setView([issLat, issLng], Math.round(earth.getZoom()));
       // marker.closePopup();
     })
     .catch(function (error) {

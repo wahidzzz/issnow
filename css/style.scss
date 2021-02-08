@@ -312,6 +312,7 @@ a {
   font-size: 0.8rem;
 }
 .basicLightbox {
+  background: rgba(0, 0, 0, 0.9) !important;
   z-index: 999999999 !important;
 }
 @media only screen and (min-width: 992px) {

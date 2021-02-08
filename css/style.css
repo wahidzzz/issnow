@@ -363,6 +363,7 @@ a {
 }
 
 .basicLightbox {
+  background: rgba(0, 0, 0, 0.9) !important;
   z-index: 999999999 !important;
 }
 

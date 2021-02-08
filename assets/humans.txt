@@ -1,0 +1,18 @@
+/* DEVELOPER */
+    Name: Wahid Shaikh
+    Github: wahidzzz
+    Project: issnow
+    
+/* ABOUT */
+    Hey ! Wahid Shaikh Here 
+    Thank you for checking out,
+    I Wanted to experiment with WebGL Earth
+    So I made this using Open-Notify API.
+
+/* SITE */
+	Created At: FEB 2021
+	Language: English
+	Doctype:HTML5
+    License: MIT License
+	IDE: Visual Studio Code, Figma
+    References: Open-Notify API, WebGL Earth

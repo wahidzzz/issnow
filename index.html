@@ -4,11 +4,32 @@
 <head>
 
   <meta charset=utf-8 />
+  <meta name="description" content="ISS Locator,">
+  <meta name="keywords" content="HTML, CSS, JavaScript">
+  <meta name="author" content="Wahid Shaikh @webxera">
+  <link type="text/plain" rel="author" href="./assets/humans.txt" />
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="icon" type="image/png" href="./assets/favicon.ico" />
   <link rel="icon" type="image/vnd.microsoft.icon" href="./assets/favicon-32x32.png">
+  <link href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" rel="stylesheet">
 
-  <!-- <script src="http://www.webglearth.com/v2/api.js"></script> -->
+  <!-- Open Graph Tags -->
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Where is ISS Now?" />
+  <meta property="og:description"
+    content="Visualizing Path of ISS (International Space Station) using Open-Notify and WebGL Earth! Created by Wahid Shaikh <Github:wahidzzz/issnow>" />
+  <meta property="og:image" content="https://issnow.webxera.xyz/assets/favicon.ico" />
+
+  <!-- Twitter Content -->
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Where is ISS Now?" />
+  <meta name="twitter:description" content="Visualizing Path of ISS (International Space Station) using Open-Notify and
+    WebGL Earth! Created by Wahid Shaikh <Github:wahidzzz/issnow>" />
+  <meta name="twitter:url" content="https://issnow.webxera.xyz" />
+  <meta name="twitter:image" content="./assets/favicon.ico" />
+
+  <!-- <script src=" http://www.webglearth.com/v2/api.js">
+  </script> -->
   <script src="./globe/v2/api.js"></script>
 
 
@@ -39,9 +60,9 @@
 
   <div class="rounded dataDiv">
     <div class="tab">
-      <button class="tablinks active" onclick="openTab(event, 'details')">ISS Now</button>
-      <button class="tablinks" onclick="openTab(event, 'pass-time')">Pass Time</button>
-      <button class="tablinks" onclick="openTab(event, 'settings')">Settings</button>
+      <button class="tablinks active" onclick="openTab(event, 'details')"><i class="ri-flag-line"></i> ISS Now</button>
+      <button class="tablinks" onclick="openTab(event, 'pass-time')"><i class="ri-eye-2-line"></i> Pass Time</button>
+      <button class="tablinks" onclick="openTab(event, 'settings')"><i class="ri-settings-line"></i> Set</button>
       <!-- <button class="tablinks" style="float:right">
         <div class="md-switch sm">
           <input type="checkbox" id="follow-iss" name="follow-iss" title="Set to Track ISS"
