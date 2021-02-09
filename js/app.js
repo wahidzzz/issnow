@@ -28,7 +28,26 @@ var Test = {
   ],
 };
 var trackIss;
+var issIcon = document.getElementsByClassName("we-pm-icon");
+//adding polygons
 
+// var options = {
+//   color: "#f00",
+//   opacity: 1,
+//   fillColor: "#ff0000",
+//   fillOpacity: 1,
+//   weight: 2,
+// };
+// var polygonB = WE.polygon(
+//   [
+//     [50, 3],
+//     [51, 2.5],
+//     [50.5, 4.5],
+//   ],
+//   options
+// ).addTo(earth);
+//disabling Warnings
+console.log = function () {};
 // Current People in Space http://api.open-notify.org/astros.json
 // Passing position http://api.open-notify.org/iss-pass.json?lat=LAT&lon=LON
 // Predcition example http://api.open-notify.org/iss-pass.json?lat=45.0&lon=-122.3&alt=20&n=5
@@ -55,17 +74,15 @@ function init() {
   getNumPeople();
   getLocation();
   getNasaApod();
-  // document.getElementById("darkSwitch").checked = false;
+
   earth = new WE.map("earth_div");
   // http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png
-  // dark theme :"https://api.maptiler.com/maps/toner/{z}/{x}/{y}.png?key=P96ofHivGNVZ2xp6Umna"
-  //https://cartodb-basemaps-{s}.global.ssl.fastly.net/dark_all/{z}/{x}/{y}.png"
-  // https://b.tile.openstreetmap.org/${z}/${x}/${y}.png
 
   WE.tileLayer("http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png").addTo(
     earth
   );
   earth.setView([21.7679, 78.8718], 2);
+
   callIssNow(earth);
 }
 
@@ -76,8 +93,8 @@ function callIssNow(earth) {
       // handle success
       // console.log(res);
 
-      var markIcon = document.getElementsByClassName("we-pm-icon");
-      while (markIcon.length > 0) markIcon[0].parentElement.remove();
+      // var markIcon = document.getElementsByClassName("we-pm-icon");
+      while (issIcon.length > 0) markIcon[0].parentElement.remove();
       //   console.log(res["data"]["iss_position"]);
       var lat = res["data"]["iss_position"]["latitude"];
       var lng = res["data"]["iss_position"]["longitude"];
@@ -302,7 +319,18 @@ function getNasaApod() {
       var title = res.data.title;
       var copy = res.data.copyright;
       var date = res.data.date;
-      apodData.innerHTML += `
+      var mediaType = res.data.media_type;
+      if (mediaType === "video") {
+        apodData.innerHTML += `
+        <tr>
+          <td><a href="#" onclick="createLightBox('${image}','${title}','${copy}','${date}','${mediaType}')">
+                <iframe src="${image}" alt="NASA APOD" width="350" height="350" style="width: 95%;height: 90%;" controls></iframe>
+              </a>
+          </td>
+        </tr>
+      </table>`;
+      } else {
+        apodData.innerHTML += `
         <tr>
           <td><a href="#" onclick="createLightBox('${image}','${title}','${copy}','${date}')">
                 <img src="${image}" alt="NASA APOD" width="350" height="350" style="width: 95%;height: 90%;"/>
@@ -311,6 +339,7 @@ function getNasaApod() {
         </tr>
        
       </table>`;
+      }
     })
     .catch(function (err) {
       console.log(err);
@@ -318,18 +347,29 @@ function getNasaApod() {
         "<tr><h3>Sorry, Could'nt Connect to NASA 😔</h3></tr></table>";
     });
 }
-function createLightBox(image, title, copy, date) {
+function createLightBox(image, title, copy, date, mediaType) {
   closeModalPop("apodDiv");
-  const instance = basicLightbox.create(`
-  <div style="padding:1rem;">
-    <h3 style="color:white;padding:.5rem;">${title}</h3>
-    <img src="${image}" width="800" height="600" style="width: 90%;height:90%;">
-    <div style="color:white;">
-      <p>&copy; ${copy}</p><p>${date}</p><p><a href='https://apod.nasa.gov/apod/astropix.html' target='_blank'><u>Visit NASA ></u></a></p>
-    </div>
-  </div>
+  var instance;
+  if (mediaType === "video") {
+    instance = basicLightbox.create(`
+    <div style="padding:1rem;">
+      <h3 style="color:white;padding:.5rem;">${title}</h3>
+      <iframe src="${image}" alt="NASA APOD" width="350" height="350" style="width: 95%;height: 90%;" controls></iframe>
+      <div style="color:white;">
+        <p>&copy; ${copy}</p><p>${date}</p><p><a href='https://apod.nasa.gov/apod/astropix.html' target='_blank'><u>Visit NASA ></u></a></p>
+      </div>
+    </div>`);
+  } else {
+    instance = basicLightbox.create(`
+    <div style="padding:1rem;">
+      <h3 style="color:white;padding:.5rem;">${title}</h3>
+      <img src="${image}" width="800" height="600" style="width: 90%;height:90%;">
+      <div style="color:white;">
+        <p>&copy; ${copy}</p><p>${date}</p><p><a href='https://apod.nasa.gov/apod/astropix.html' target='_blank'><u>Visit NASA ></u></a></p>
+      </div>
+    </div>`);
+  }
 
-`);
   instance.show();
 }
 function trackISS() {
