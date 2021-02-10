@@ -91,10 +91,10 @@ function callIssNow(earth) {
     .get("http://api.open-notify.org/iss-now.json")
     .then(function (res) {
       // handle success
-      // console.log(res);
+      console.log(res);
 
       // var markIcon = document.getElementsByClassName("we-pm-icon");
-      while (issIcon.length > 0) markIcon[0].parentElement.remove();
+      while (issIcon.length > 0) issIcon[0].parentElement.remove();
       //   console.log(res["data"]["iss_position"]);
       var lat = res["data"]["iss_position"]["latitude"];
       var lng = res["data"]["iss_position"]["longitude"];
@@ -388,7 +388,7 @@ function trackISS() {
         var c = earth.getPosition();
         var elapsed = before ? now - before : 0;
         before = now;
-        earth.setCenter([c[0], c[1] + 0.1 * (elapsed / 100)]);
+        earth.setCenter([c[0], c[1] + 0.1 * (elapsed / 30)]);
         requestAnimationFrame(animate);
       }
     });
