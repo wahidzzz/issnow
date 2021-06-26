@@ -68,7 +68,7 @@ function init() {
         counter++;
       }
     },
-    false
+    false,
   );
   trackISS();
   getNumPeople();
@@ -79,7 +79,7 @@ function init() {
   // http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png
 
   WE.tileLayer("http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png").addTo(
-    earth
+    earth,
   );
   earth.setView([21.7679, 78.8718], 2);
 
@@ -146,7 +146,7 @@ function callIssNow(earth) {
         {
           maxWidth: 150,
           closeButton: true,
-        }
+        },
       );
       // .openPopup();
       earth.panTo([issLat, issLng], { heading: 90, tilt: 25, duration: 1 });
@@ -204,10 +204,12 @@ function geoSuccess(position) {
   // console.log(lat, lng);
   let config = {
     method: "get",
-    url: `http://api.open-notify.org/iss-pass.json?lat=${lat}&lon=${lng}`,
+    url: `https://api.open-notify.org/iss-pass.json?lat=${lat}&lon=${lng}`,
     headers: {
+      "Content-Type": "application/json",
       "Access-Control-Allow-Origin": "*",
-      "Content-Type": "text/html",
+      "Access-Control-Allow-Headers":
+        "Origin, X-Requested-With, Content-Type, Accept",
     },
   };
 
@@ -262,7 +264,7 @@ function speakerClick() {
       this.currentTime = 0;
       this.play();
     },
-    false
+    false,
   );
 }
 
@@ -311,7 +313,7 @@ function getNasaApod() {
       </tr>`;
   axios
     .get(
-      "https://api.nasa.gov/planetary/apod?api_key=lrBdjfSktWU53ziTLIiFweAjRzAkGokSHfhmJwRf"
+      "https://api.nasa.gov/planetary/apod?api_key=lrBdjfSktWU53ziTLIiFweAjRzAkGokSHfhmJwRf",
     )
     .then(function (res) {
       console.log(res);
